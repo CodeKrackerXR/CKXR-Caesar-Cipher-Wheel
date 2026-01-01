@@ -21,6 +21,7 @@ const caesarCipher = (text: string, shift: number, encrypt: boolean = true) => {
 
 export default function App() {
   const [shift, setShift] = useState(23);
+  const [refLetter, setRefLetter] = useState("A");
   const [input, setInput] = useState("CLAYTON");
   const [output, setOutput] = useState("");
   const [activeTab, setActiveTab] = useState<'cipher' | 'lab'>('cipher');
@@ -42,6 +43,10 @@ export default function App() {
     const val = e.target.value.toUpperCase().replace(/[^A-Z\s]/g, "");
     setOutput(val);
     setInput(caesarCipher(val, shift, false));
+  };
+
+  const handleShiftChange = (newShift: number) => {
+    setShift(newShift);
   };
 
   return (
@@ -88,8 +93,11 @@ export default function App() {
                 <div className="absolute -inset-4 bg-indigo-500/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
                 <CipherWheel 
                   shift={shift} 
+                  onShiftChange={handleShiftChange}
                   cipherCode={output} 
                   crackedCode={input} 
+                  refLetter={refLetter}
+                  onRefLetterChange={setRefLetter}
                 />
               </div>
             </div>
@@ -115,9 +123,9 @@ export default function App() {
                     className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
                   />
                   <div className="flex justify-between text-[10px] text-slate-500 font-bold uppercase tracking-widest px-1">
-                    <span>A=0</span>
-                    <span>A=13</span>
-                    <span>A=25</span>
+                    <span>Shift 0</span>
+                    <span>Shift 13</span>
+                    <span>Shift 25</span>
                   </div>
                 </div>
 
@@ -172,7 +180,7 @@ export default function App() {
                 <div>
                   <h3 className="font-bold text-sm text-indigo-300 mb-1">How it works</h3>
                   <p className="text-xs text-indigo-200/60 leading-relaxed">
-                    The Caesar Cipher is a substitution cipher where each letter in the plaintext is replaced by a letter some fixed number of positions down the alphabet. Rotate the wheel or use the slider to set your offset.
+                    The Caesar Cipher is a substitution cipher where each letter in the plaintext is replaced by a letter some fixed number of positions down the alphabet. Rotate the wheel directly or edit the center values to set your offset.
                   </p>
                 </div>
               </section>
