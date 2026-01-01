@@ -198,19 +198,17 @@ export const CipherWheel: React.FC<CipherWheelProps> = ({
           <circle cx={center} cy={center} r={numberRadius} fill="#22c55e" stroke="#15803d" strokeWidth="2" />
           {Array.from({ length: 26 }).map((_, i) => {
             const { angle } = getPos(numberMidRadius, i);
-            // The indicator rectangle is at index 'shift', which corresponds to rotation 0 (top)
-            const isShiftNumber = i === (shift % 26);
+            // RULE: Highlight ONLY the number displayed in the center (refNumber)
+            const isTargetNumber = i === (refNumber % 26);
             return (
               <g key={`num-${i}`} transform={`rotate(${angle}, ${center}, ${center})`}>
-                {isShiftNumber && (
+                {isTargetNumber && (
                   <rect 
                     x={center - 15} 
                     y={center - numberRadius} 
                     width="30" 
                     height={numberRadius - centralDiskRadius} 
                     fill="#facc15" 
-                    stroke="#854d0e"
-                    strokeWidth="1"
                     className="pointer-events-none"
                   />
                 )}
@@ -219,9 +217,9 @@ export const CipherWheel: React.FC<CipherWheelProps> = ({
                   y={center - numberMidRadius}
                   textAnchor="middle"
                   dominantBaseline="central"
-                  fill={isShiftNumber ? "#1e293b" : "#dcfce7"}
-                  fontSize="16"
-                  fontWeight="800"
+                  fill={isTargetNumber ? "#000000" : "#ffffff"}
+                  fontSize={isTargetNumber ? "18" : "16"}
+                  fontWeight="900"
                   className="pointer-events-none"
                   style={{ fontFamily: "'JetBrains Mono', monospace" }}
                 >
@@ -237,22 +235,22 @@ export const CipherWheel: React.FC<CipherWheelProps> = ({
         
         {/* HUD Info Text (Fixed in center) */}
         <g transform={`translate(${center}, ${center})`}>
-          {/* A = Shift indicator (Static pos, but with inputs) */}
+          {/* Reference Indicator: [Letter] = [Number] */}
           <foreignObject x="-80" y="-105" width="160" height="40">
-            <div className="flex items-center justify-center h-full gap-1 text-2xl font-black text-white font-inter">
+            <div className="flex items-center justify-center h-full gap-2 text-2xl font-black font-inter">
               <input
                 type="text"
                 value={refLetter}
                 onChange={handleLetterInput}
-                className="w-10 bg-transparent text-center border-b-2 border-transparent hover:border-white/20 focus:border-white focus:outline-none transition-colors"
+                className="w-10 bg-transparent text-center text-white border-b-2 border-transparent hover:border-white/20 focus:border-white focus:outline-none transition-colors"
                 maxLength={1}
               />
-              <span className="text-slate-500">=</span>
+              <span className="text-slate-500 font-normal">=</span>
               <input
                 type="text"
                 value={formattedRefNumber}
                 onChange={handleNumberInput}
-                className="w-12 bg-transparent text-center border-b-2 border-transparent hover:border-[#facc15]/20 focus:border-[#facc15] focus:outline-none text-[#facc15] transition-colors"
+                className="w-12 bg-transparent text-center text-[#facc15] border-b-2 border-transparent hover:border-[#facc15]/20 focus:border-[#facc15] focus:outline-none transition-all font-mono font-bold"
                 maxLength={2}
               />
             </div>
