@@ -1,0 +1,7 @@
+{
+  "name": "CKXR Caesar Cipher Wheel",
+  "description": "A high-fidelity Caesar Cipher wheel with real-time encoding, interactive wheel dynamics, and an AI-powered image stylist using Gemini 2.5 Flash Image.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
