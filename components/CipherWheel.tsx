@@ -235,9 +235,9 @@ export const CipherWheel: React.FC<CipherWheelProps> = ({
         
         {/* HUD Info Text (Fixed in center) */}
         <g transform={`translate(${center}, ${center})`}>
-          {/* Reference Indicator: [Letter] = [Number] */}
+          {/* Reference Indicator: [Letter] = [Number] - No gap to keep them extremely close */}
           <foreignObject x="-80" y="-105" width="160" height="40">
-            <div className="flex items-center justify-center h-full gap-2 text-2xl font-black font-inter">
+            <div className="flex items-center justify-center h-full gap-0 text-2xl font-black font-inter">
               <input
                 type="text"
                 value={refLetter}
@@ -245,7 +245,7 @@ export const CipherWheel: React.FC<CipherWheelProps> = ({
                 className="w-10 bg-transparent text-center text-white border-b-2 border-transparent hover:border-white/20 focus:border-white focus:outline-none transition-colors"
                 maxLength={1}
               />
-              <span className="text-slate-500 font-normal">=</span>
+              <span className="text-slate-500 font-normal px-0.5">=</span>
               <input
                 type="text"
                 value={formattedRefNumber}
